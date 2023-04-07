@@ -1,0 +1,159 @@
+let status = [
+	{
+		"name": "God's Word",
+		"type": "LISTENING"
+	},
+	{
+		"name": "updating to Alpha 0.2",
+		"type": "PLAYING"
+	},
+	{
+		"name": "John 3:16 - 'For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life.'",
+		"type": "LISTENING"
+	},
+	{
+		"name": "Philippians 4:13 - 'I can do all this through him who gives me strength.'",
+		"type": "LISTENING"
+	},
+	{
+		"name": "John 14:6 - 'Jesus answered, “I am the way and the truth and the life. No one comes to the Father except through me.'",
+		"type": "LISTENING"
+	},
+	{
+		"name": "Joshua 1:9 -'Have I not commanded you? Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go.'",
+		"type": "LISTENING"
+	},
+	{
+		"name": "Matthew 28:19 - 'Therefore go and make disciples of all nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit'",
+		"type": "LISTENING"
+	},
+	{
+		"name": "Colossians 2:13-14 - 'He forgave us all our sins, having canceled the charge of our legal indebtedness, which stood against us and condemned us; he has taken it away, nailing it to the cross'",
+		"type": "LISTENING"
+    }
+]
+
+setInterval(() => {
+    let random = Math.floor(Math.random() * status.length);
+    client.user.setActivity(status[random]);
+    }, 15000);
+});
+
+
+
+// Read and parse the status.json file
+const statusPath = path.join(__dirname, 'status.json');
+const status = JSON.parse(fs.readFileSync(statusPath));
+
+// When the client is ready, run this code (only once)
+client.once('ready', c => {
+	console.log(`Ready! Logged in as ${c.user.tag}`);
+
+    // This will cycle the bot's status
+    setInterval(() => {
+        let random = Math.floor(Math.random() * status.length);
+        client.user.setActivity(status[random].name, { type: status[random].type });
+    }, 20000);
+});
+
+
+//status.json is as follows:
+[
+	{
+		"name": "God's Word",
+		"type": "LISTENING"
+	},
+	{
+		"name": "updating to Beta 0.2",
+		"type": "PLAYING"
+	},
+	{
+		"name": "John 3:16 - 'For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life.'",
+		"type": "LISTENING"
+	},
+	{
+		"name": "Philippians 4:13 - 'I can do all this through him who gives me strength.'",
+		"type": "LISTENING"
+	},
+	{
+		"name": "John 14:6 - 'Jesus answered, “I am the way and the truth and the life. No one comes to the Father except through me.'",
+		"type": "LISTENING"
+	},
+	{
+		"name": "Joshua 1:9 -'Have I not commanded you? Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go.'",
+		"type": "LISTENING"
+	},
+	{
+		"name": "Matthew 28:19 - 'Therefore go and make disciples of all nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit'",
+		"type": "LISTENING"
+	},
+	{
+		"name": "Colossians 2:13-14 - 'He forgave us all our sins, having canceled the charge of our legal indebtedness, which stood against us and condemned us; he has taken it away, nailing it to the cross'",
+		"type": "LISTENING"
+    }
+]
+
+
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName('bible')
+		.setDescription('Replies with a Bible reference for the given passage')
+		.addStringOption(option =>
+			option.setName('book')
+				.setDescription('The book of the Bible')
+				.setRequired(true)
+        .setAutocomplete(true))
+		.addIntegerOption(option =>
+			option.setName('chapter')
+				.setDescription('The chapter of the book')
+				.setRequired(true))
+    .addIntegerOption(option =>
+      option.setName('verse')
+        .setDescription('The verse of the chapter')
+        .setRequired(true)),
+  // Autocomplete for the books of the Bible
+  async autocomplete(interaction) {
+    const focusedValue = interaction.options.getFocused();
+		    const choices = ["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1 Samuel", "2 Samuel", "1 Kings", "2 Kings", "1 Chronicles", "2 Chronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalms", "Proverbs", "Ecclesiastes", "Song of Solomon", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel", "Amos", "Obadiah", "Jonah", "Micah", "Nahum","Habakkuk","Zephaniah","Haggai","Zechariah","Malachi","Matthew","Mark","Luke","John","Acts","Romans","1 Corinthians","2 Corinthians","Galatians","Ephesians","Philippians","Colossians","1 Thessalonians","2 Thessalonians","1 Timothy","2 Timothy","Titus","Philemon","Hebrews","James","1 Peter","2 Peter","1 John","2 John","3 John","Jude","Revelation"];
+      const filtered = choices.filter(choice => choice.toLowerCase().startsWith(focusedValue.toLowerCase()));
+      await interaction.respond(
+        filtered.map(choice => ({ name: choice, value: choice })),
+      );
+    },
+
+	async execute(interaction) {
+        // Get the user input from the options
+		const book = interaction.options.getString('book');
+		const chapter = interaction.options.getInteger('chapter');
+		const verse = interaction.options.getInteger('verse');
+		
+        // Construct the passage string from the input
+        let passage = `${book} ${chapter}:${verse}`;
+
+        // Construct the url and headers for the Rapid API request
+        const url = `https://niv-bible.p.rapidapi.com/row?Book=${book}&Chapter=${chapter}&Verse=${verse}`;
+        
+        const options = {
+            method: 'GET',
+            headers: {
+              'X-RapidAPI-Key': `${config.key}`,
+              'X-RapidAPI-Host': 'niv-bible.p.rapidapi.com'
+            }
+        };
+
+        // Make the request and parse the response
+        fetch(url, options)
+        .then(response => response.json())
+        .then(json => {
+          // Get the text of the verse from the json object
+          const values = Object.values(json); 
+          const textObject = values[2];
+          // The text object is the third value in the array
+          const text = Object.values(textObject)[0];
+          // The text string is the first value in the text object
+          // Send the reply with the text
+          interaction.reply(`**${passage}** | ${text}`);
+        })
+        .catch(err => console.error('error:' + err));
+	},
+};

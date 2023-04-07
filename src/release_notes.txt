@@ -1,0 +1,41 @@
+// Alpha 0.1
+- Created SearchingScripture
+- /prune, /server, /user, /avatar and /ping commands
+
+// Alpha 0.2
+- Added ping functionality (ms delay)
+- Added /botinfo 
+- Added custom status
+
+// Beta 0.1
+- Added /biblegateway
+- Added /help
+
+// Beta 0.2
+- Added /reactroles
+// Beta 0.2.1 (current rollout)
+- Fixed custom status
+- Improved /biblegateway to allow for passages (e.g. John 3:16-18)
+
+// Beta 0.3
+- Added /changelog
+- Improved /biblegateway to allow for different translations (NIVUK is still the default)
+- Improved /biblegateway to not require a specific verse
+- Added /bible to get a specific Bible reference as a message
+// Beta 0.3.1
+- Fixed /bible (now using the bible-api.com API)
+- Minor tweaks with the code - now using event handling
+// Beta 0.3.2 (Current rollout)
+- Improved /botinfo, /server, /user to look better (using embeds).
+
+// Beta 0.4
+- Improved /bible to work with multiple Bible versions
+- Give autocomplete options for /bible
+- Send /bible as an embed
+- Added server count to /botinfo
+- Improved /avatar to look better (now using embeds)
+
+// Release 1.0.0
+- Added /random
+- Added /information
+- Improved /ping to look better (now using embeds)

@@ -1,0 +1,17 @@
+{
+  "name": "searchingscripture",
+  "version": "0.4",
+  "description": "A useful bot for the Divine Discussion server, that can search up Bible references and set up reaction roles. Created by ninjabem#6995",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "ninjabem#6995",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.8.0",
+    "djs-commander": "^0.0.44",
+    "node-fetch": "^2.6.9"
+  }
+}
