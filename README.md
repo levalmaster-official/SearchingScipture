@@ -11,7 +11,7 @@ You can invite it to your server here: https://discord.com/api/oauth2/authorize?
 
 ## Installation
 
-To install SearchingScripture on your own server, you need to have Node.js, discord.js v14.9, and node-fetch@2 installed. You also need to create a bot account on the Discord developer portal and get a token.
+To host SearchingScripture by youself, you need to have Node.js, discord.js v14.9, and node-fetch@2 installed. You also need to create a bot account on the Discord developer portal and get a token.
 
 - Clone this repository or download the zip file.
 - Run `npm install` to install the dependencies.
@@ -23,7 +23,7 @@ To install SearchingScripture on your own server, you need to have Node.js, disc
 Once the bot is on your server, you can use the following slash commands:
 
 - `/help`: To see what commands are available.
-- `/bible <book> <chapter> <passage> [version]`: Search up a Bible reference from a specified version. If no version is specified, the default is WEBBE. Example: `/bible John 3:16 KJV`. Example:
+- `/bible <book> <chapter> <passage> [version]`: Search up a Bible reference from a specified version. If no version is specified, the default is WEBBE. Example: `/bible John 3:16 KJV`.
 
 ![image](https://user-images.githubusercontent.com/78265132/230687605-1f56eac2-2259-4725-8690-ce90e0cc1386.png)
 
@@ -34,7 +34,7 @@ Once the bot is on your server, you can use the following slash commands:
 ## Licence
 This project is licensed under the MIT License, as following:
 
-Copyright 2023 Benjamin Shaw
+*Copyright 2023 Benjamin Shaw
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this
 software and associated documentation files (the "Software"), to deal in the Software
@@ -47,4 +47,4 @@ INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
 PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
 HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.*
